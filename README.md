@@ -16,16 +16,18 @@ The project also serves as an academic data analysis assignment developed within
 
 This project may utilize:
 - Python 
+- R
 
 ## Repository Structure
 
 ```struct
-- soon...
+- Docs/     # Documentation catalog.
 ```
 
 ## Usage
 
-- soon
+### Reading analysis
+- [In order to undertake reading analysis online without the necessity of compilation, it is recommended that the catalog file in the repository be utilised.](./Docs/README.md)
 
 ## License
 
