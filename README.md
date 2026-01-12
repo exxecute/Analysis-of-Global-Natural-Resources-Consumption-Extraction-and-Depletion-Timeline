@@ -26,7 +26,12 @@ This project may utilize:
   ├── raw/          - Raw data.
   └── processed/    - Processed data.
 - figures/          - Figures.
+- src/              - Code sources for testing or trying analize data.
 ```
+
+## Data Sources
+
+- [our-world-in-data](https://github.com/owid/energy-data) - Our World in Data — Energy Datasets github repo. (Uses like a submodule)
 
 ## Usage
 
