@@ -21,7 +21,11 @@ This project may utilize:
 ## Repository Structure
 
 ```struct
-- Docs/     # Documentation catalog.
+- docs/             - Documentation catalog.
+- data/             - Directory for data.
+  ├── raw/          - Raw data.
+  └── processed/    - Processed data.
+- figures/          - Figures.
 ```
 
 ## Usage
