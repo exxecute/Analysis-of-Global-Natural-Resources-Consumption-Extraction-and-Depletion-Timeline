@@ -1,0 +1,3 @@
+[submodule "our-world-in-data"]
+	path = data/raw/our-world-in-data
+	url = git@github.com:owid/energy-data.git
