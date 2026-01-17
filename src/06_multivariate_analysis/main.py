@@ -70,3 +70,77 @@ def plot_pca(df_plot, file_name, title):
 # =========================
 plot_pca(df_main, OUTPUT_MAIN, "PCA (Основная масса стран, 0-95 перцентиль)")
 plot_pca(df_outliers, OUTPUT_OUTLIERS, "PCA (Выбросы стран, >95 перцентиль)")
+
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+from sklearn.cluster import KMeans
+import numpy as np
+
+# =========================
+# Настройки
+# =========================
+DATA_PATH = "../../data/processed/energy_panel_clean.csv"
+NUMERIC_METRICS = ["Production", "Consumption", "Emissions"]
+OUTPUT_PCA_CLUSTER = "../../figures/multivariate_analysis/pca_kmeans.png"
+K = 5  # количество кластеров (можно подобрать через метод локтя)
+
+# =========================
+# Загрузка данных
+# =========================
+df = pd.read_csv(DATA_PATH)
+df_numeric = df[df["metric"].isin(NUMERIC_METRICS)].copy()
+
+df_pivot = df_numeric.pivot_table(
+    index='country',
+    columns=['resource', 'metric'],
+    values='value',
+    aggfunc='sum',
+    fill_value=0
+)
+
+# =========================
+# Масштабирование и PCA
+# =========================
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(df_pivot)
+
+pca = PCA(n_components=2)
+X_pca = pca.fit_transform(X_scaled)
+df_pca = pd.DataFrame(X_pca, columns=['PC1', 'PC2'], index=df_pivot.index)
+
+explained = pca.explained_variance_ratio_
+print(f"Доля объясненной дисперсии: PC1={explained[0]:.2f}, PC2={explained[1]:.2f}")
+
+# =========================
+# KMeans кластеризация
+# =========================
+kmeans = KMeans(n_clusters=K, random_state=42)
+clusters = kmeans.fit_predict(X_scaled)
+df_pca['Cluster'] = clusters
+
+# =========================
+# Визуализация
+# =========================
+plt.figure(figsize=(12,8))
+colors = plt.cm.get_cmap('tab10', K)
+
+for k in range(K):
+    cluster_data = df_pca[df_pca['Cluster'] == k]
+    plt.scatter(
+        cluster_data['PC1'], cluster_data['PC2'],
+        label=f'Кластер {k+1}', alpha=0.7, edgecolor='k', s=80, c=[colors(k)]
+    )
+
+# подписи для нескольких стран (например, топ 15 по PC1)
+for country in df_pca.sort_values('PC1', ascending=False).index[:15]:
+    plt.text(df_pca.loc[country, 'PC1'], df_pca.loc[country, 'PC2'], country, fontsize=8)
+
+plt.xlabel(f'PC1 ({explained[0]*100:.1f}% дисперсии)')
+plt.ylabel(f'PC2 ({explained[1]*100:.1f}% дисперсии)')
+plt.title(f'PCA + KMeans кластеризация (K={K})')
+plt.legend()
+plt.grid(True)
+plt.tight_layout()
+plt.savefig(OUTPUT_PCA_CLUSTER, dpi=300)
