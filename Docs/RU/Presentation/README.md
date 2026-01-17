@@ -28,9 +28,9 @@
 |-------------|------------|--------|
 | Предварительный анализ | Python (pandas, numpy) | Descriptive statistics, проверка данных, работа с пропусками |
 | Визуализация | Python (matplotlib, seaborn) | Гистограммы, boxplot, violin plot, scatter, catplot |
-| Проверка гипотез | R (stats, t.test, ANOVA, chisq.test) | t-test, ANOVA, χ², сравнение регионов |
+| Проверка гипотез | Python | t-test, ANOVA, χ², сравнение регионов |
 | Многомерный анализ | Python (scikit-learn) | PCA, KMeans, кластеризация, визуализация главных компонент |
-| Прогноз истощения | Python / R | Экстраполяция потребления, расчет “Years to depletion” |
+| Прогноз истощения | Python | Экстраполяция потребления, расчет “Years to depletion” |
 
 ---
 
