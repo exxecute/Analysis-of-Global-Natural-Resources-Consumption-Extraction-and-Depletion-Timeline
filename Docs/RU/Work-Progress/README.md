@@ -49,3 +49,16 @@ energy_long.csv
 Во время нормализации датасетов, заметил,
 что EIA датасеты в основном пустые и не хранят особо важной информации,
 поэтому было принято решение отказаться от этого датасета.
+
+## Новая унифицированная таблица в ходе работы
+
+Структура таблицы:
+- country        – страна
+- iso_code       – ISO-3 код 
+- region         – регион 
+- year           – год
+- resource       – Oil | Gas | Coal | Electricity | Energy | CO2
+- metric         – Consumption | Production | Reserves | Emissions
+- value          – числовое значение
+- unit           – единица измерения
+- source         – OWID | BP

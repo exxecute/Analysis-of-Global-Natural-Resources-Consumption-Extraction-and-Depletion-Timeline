@@ -1,6 +1,5 @@
 from owid_loader import load_owid
 from bp_loader import load_bp
-from eia_loader import load_eia_generic
 import pandas as pd
 
 def run_pipeline():
