@@ -1,0 +1,15 @@
+resource,metric,test,stat,p_value,significant
+Oil,Consumption,ANOVA_regions,378.3659491611594,0.0,True
+Oil,Consumption,T-test_United States_vs_China,6.5915149849766355,4.765914837042022e-10,True
+Oil,Production,ANOVA_regions,575.6934363826273,0.0,True
+Oil,Production,T-test_United States_vs_Saudi Arabia,3.4021993023562023,0.0007413152168537706,True
+Gas,Consumption,ANOVA_regions,436.14772387054086,0.0,True
+Gas,Consumption,T-test_United States_vs_Russia,4.765076665079365,3.5153256796415535e-06,True
+Gas,Production,ANOVA_regions,510.4177704049062,0.0,True
+Gas,Production,T-test_United States_vs_Russia,-0.2830642915997898,0.7774311507185294,False
+Coal,Consumption,ANOVA_regions,69.34345296065142,8.077115387190231e-85,True
+Coal,Consumption,T-test_China_vs_United States,3.9602429986887056,0.00011729076530561364,True
+Coal,Production,ANOVA_regions,182.983417218985,2.183641634175058e-225,True
+Coal,Production,T-test_China_vs_United States,1.9420517159134052,0.053551313642475985,False
+CO2,Emissions,ANOVA_regions,101.35565051368687,7.098073399052031e-121,True
+CO2,Emissions,T-test_China_vs_United States,4.3574413632173465,0.00018678650258075328,True
