@@ -64,6 +64,20 @@ ALLOWED_METRICS = {
     "Consumption", "Production", "Reserves", "Emissions"
 }
 
+def filter_metrics(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Оставляет только метрики, используемые в проекте
+    """
+    before = df.shape[0]
+
+    df = df[df["metric"].isin(ALLOWED_METRICS)].copy()
+
+    after = df.shape[0]
+    print(f"[filter_metrics] rows before: {before}, after: {after}")
+
+    return df
+
+
 AGGREGATES = [
     "World", "OECD", "Non-OECD", "EU",
     "Total", "Other", "Asia", "Europe",
@@ -105,6 +119,8 @@ def validate_schema(df: pd.DataFrame) -> None:
         raise ValueError("Invalid resource values detected")
 
     if not df["metric"].isin(ALLOWED_METRICS).all():
+        print("Unique metrics values:")
+        print(sorted(df["metric"].unique()))
         raise ValueError("Invalid metric values detected")
 
     if not df["year"].between(1800, 2100).all():
@@ -196,6 +212,9 @@ def run_cleaning_pipeline() -> None:
 
     print("Checking unmapped resources...")
     assert_no_nan_resources(df)
+
+    print("Filtering metrics names...")
+    df = filter_metrics(df)
 
     print("Loading country-region mapping...")
     regions = pd.read_csv(
