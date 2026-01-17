@@ -116,6 +116,31 @@ def normalize_year(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+def normalize_value(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Приводит value к float, удаляя мусорные значения
+    """
+    df = df.copy()
+
+    # Убираем пробелы и запятые
+    df["value"] = (
+        df["value"]
+        .astype(str)
+        .str.replace(",", "", regex=False)
+        .str.replace(" ", "", regex=False)
+    )
+
+    # В число, всё нечисловое → NaN
+    df["value"] = pd.to_numeric(df["value"], errors="coerce")
+
+    before = df.shape[0]
+    df = df.dropna(subset=["value"])
+    after = df.shape[0]
+
+    print(f"[normalize_value] dropped rows: {before - after}")
+
+    return df
+
 # =========================
 # VALIDATION
 # =========================
@@ -236,6 +261,9 @@ def run_cleaning_pipeline() -> None:
 
     print("Normalizing year names to int...")
     df = normalize_year(df)
+
+    print("Normalizing values names to int...")
+    df = normalize_value(df)
 
     print("Loading country-region mapping...")
     regions = pd.read_csv(
