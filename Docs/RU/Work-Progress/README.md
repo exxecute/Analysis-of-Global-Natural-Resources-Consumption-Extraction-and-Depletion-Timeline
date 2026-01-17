@@ -18,7 +18,7 @@
 - iso_code       – ISO-3 код 
 - region         – регион 
 - year           – год
-- resource       – Oil | Gas | Coal | Electricity | Energy | CO2 | Water
+- resource       – Oil | Gas | Coal | Electricity | Energy | CO2
 - metric         – Consumption | Production | Reserves | Capacity | Emissions
 - value          – числовое значение
 - unit           – единица измерения
@@ -43,3 +43,9 @@ HARMONIZATION
 ▼
 energy_long.csv
 ```
+
+## Отказ от EIA
+
+Во время нормализации датасетов, заметил,
+что EIA датасеты в основном пустые и не хранят особо важной информации,
+поэтому было принято решение отказаться от этого датасета.

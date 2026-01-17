@@ -10,15 +10,6 @@ def run_pipeline():
     dfs.append(load_owid("../../data/raw/our-world-in-data/owid-energy-data.csv"))
     dfs.append(load_bp("../../data/raw/BP-energy-institute/EI-Stats-Review-ALL-data.xlsx"))
 
-    # dfs.append(
-    #     load_eia_generic(
-    #         "../../data/raw/eia/gas_consumption.csv",
-    #         resource="Gas",
-    #         metric="Consumption",
-    #         unit="EJ"
-    #     )
-    # )
-
     energy_long = pd.concat(dfs, ignore_index=True)
 
     energy_long.to_csv(
