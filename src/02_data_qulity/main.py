@@ -246,22 +246,46 @@ def fix_iso_codes(df: pd.DataFrame) -> pd.DataFrame:
 # REGION MERGE
 # =========================
 
-def add_regions(
-    df: pd.DataFrame,
-    regions: pd.DataFrame
-) -> pd.DataFrame:
+def add_regions(df: pd.DataFrame, regions: pd.DataFrame) -> pd.DataFrame:
     """
-    regions: country | iso_code | region
+    Добавляет для каждой страны iso_code и region из справочника regions.
+    Если страны нет в regions — оставляет NaN.
     """
 
+    df = df.copy()
+    regions = regions.copy()
+
+    # Чистим пробелы
+    df["country"] = df["country"].str.strip()
+    regions["country"] = regions["country"].str.strip()
+
+    # Приводим названия стран к единому виду
+    df["country"] = df["country"].replace(COUNTRY_REMAP)
+    regions["country"] = regions["country"].replace(COUNTRY_REMAP)
+
+    # Убираем дубликаты по стране
+    regions = regions.drop_duplicates(subset="country")
+
+    # Merge по стране
     df = df.merge(
-        regions,
-        on=["country", "iso_code"],
+        regions[["country", "iso_code", "region"]],
+        on="country",
         how="left",
         validate="many_to_one"
     )
 
+    # Создаем колонку iso_code, если её нет
+    if "iso_code" not in df.columns:
+        df["iso_code"] = df["iso_code_y"]
+
+    # Контроль: какие страны остались без region или iso_code
+    missing = df[df["region"].isna()][["country"]].drop_duplicates()
+    if not missing.empty:
+        print("Warning: missing region/iso_code for countries:")
+        print(missing)
+
     return df
+
 
 
 # =========================
@@ -323,11 +347,11 @@ def run_cleaning_pipeline() -> None:
     print("Adding regions...")
     df = add_regions(df, regions)
 
-    print("Dropping aggregates...")
-    df = drop_aggregates(df)
-
     print("Normalize country names...")
     df = normalize_country_names(df)
+
+    print("Dropping aggregates...")
+    df = drop_aggregates(df)
 
     print("Dropping historical countries...")
     df = drop_historical_countries(df)
