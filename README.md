@@ -15,8 +15,7 @@ The project also serves as an academic data analysis assignment developed within
 ## Tools & Technologies
 
 This project may utilize:
-- Python 
-- R
+- Python 3.12 (security)
 
 ## Repository Structure
 
