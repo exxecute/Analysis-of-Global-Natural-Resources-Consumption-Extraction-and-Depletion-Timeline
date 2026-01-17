@@ -4,5 +4,5 @@ This project has documentation in two languages:
 
 | Language                  | Description                             | Version   |
 | -                         | -                                       | -         |
-| [Russian](./RU/README.md) | документация на русском языке           | `v4.0`    |
+| [Russian](./RU/README.md) | документация на русском языке           | `v6.0`    |
 | [English](./EN/README.md) | documentation in English                | `v2.0`    |
