@@ -98,6 +98,24 @@ MANUAL_ISO_FIXES = {
     "Vietnam": "VNM"
 }
 
+def normalize_year(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Приводит year к int, некорректные значения → NaN
+    """
+    df = df.copy()
+
+    df["year"] = pd.to_numeric(df["year"], errors="coerce")
+
+    before = df.shape[0]
+    df = df.dropna(subset=["year"])
+    after = df.shape[0]
+
+    df["year"] = df["year"].astype(int)
+
+    print(f"[normalize_year] dropped rows: {before - after}")
+
+    return df
+
 # =========================
 # VALIDATION
 # =========================
@@ -215,6 +233,9 @@ def run_cleaning_pipeline() -> None:
 
     print("Filtering metrics names...")
     df = filter_metrics(df)
+
+    print("Normalizing year names to int...")
+    df = normalize_year(df)
 
     print("Loading country-region mapping...")
     regions = pd.read_csv(
