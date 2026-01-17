@@ -141,6 +141,62 @@ def normalize_value(df: pd.DataFrame) -> pd.DataFrame:
 
     return df
 
+AGGREGATE_COUNTRIES = [
+    "World",
+    "OPEC",
+    "Non-OPEC",
+    "Central America",
+    "Other S. & Cent. America",
+    "Other Europe",
+    "Other CIS",
+    "Other Middle East",
+    "Other Africa",
+    "Other Asia Pacific",
+    "Other Caribbean",
+    "Other South America",
+    "Eastern Africa",
+    "Middle Africa",
+    "Western Africa",
+    "Other Northern Africa",
+    "Other Southern Africa",
+    "of which: OECD",
+    "Non-OECD",
+    "European Union #"
+]
+
+def drop_aggregates(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+
+    df = df[
+        ~df["country"]
+        .str.strip()
+        .isin(AGGREGATE_COUNTRIES)
+    ]
+
+    return df
+
+COUNTRY_REMAP = {
+    "US": "United States",
+    "Russian Federation": "Russia",
+    "Trinidad & Tobago": "Trinidad and Tobago",
+    "Czech Republic": "Czechia",
+    "Republic of Congo ": "Republic of the Congo",
+}
+
+def normalize_country_names(df: pd.DataFrame) -> pd.DataFrame:
+    df = df.copy()
+    df["country"] = df["country"].str.strip()
+    df["country"] = df["country"].replace(COUNTRY_REMAP)
+    return df
+
+HISTORICAL_COUNTRIES = [
+    "USSR",
+    "Netherlands Antilles",
+]
+
+def drop_historical_countries(df: pd.DataFrame) -> pd.DataFrame:
+    return df[~df["country"].isin(HISTORICAL_COUNTRIES)]
+
 # =========================
 # VALIDATION
 # =========================
@@ -177,10 +233,6 @@ def validate_schema(df: pd.DataFrame) -> None:
 # CLEANING
 # =========================
 
-def drop_aggregates(df: pd.DataFrame) -> pd.DataFrame:
-    pattern = "|".join(AGGREGATES)
-    return df[~df["country"].str.contains(pattern, na=False)]
-
 
 def fix_iso_codes(df: pd.DataFrame) -> pd.DataFrame:
     df["iso_code"] = df.apply(
@@ -205,7 +257,8 @@ def add_regions(
     df = df.merge(
         regions,
         on=["country", "iso_code"],
-        how="left"
+        how="left",
+        validate="many_to_one"
     )
 
     return df
@@ -241,9 +294,6 @@ def run_cleaning_pipeline() -> None:
         "../../data/intermediate/energy_long.csv"
     )
 
-    print("Dropping aggregates...")
-    df = drop_aggregates(df)
-
     print("Fixing ISO codes...")
     df = fix_iso_codes(df)
 
@@ -272,6 +322,15 @@ def run_cleaning_pipeline() -> None:
 
     print("Adding regions...")
     df = add_regions(df, regions)
+
+    print("Dropping aggregates...")
+    df = drop_aggregates(df)
+
+    print("Normalize country names...")
+    df = normalize_country_names(df)
+
+    print("Dropping historical countries...")
+    df = drop_historical_countries(df)
 
     print("Validating schema...")
     validate_schema(df)
