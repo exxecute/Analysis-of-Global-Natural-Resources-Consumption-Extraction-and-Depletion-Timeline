@@ -43,20 +43,32 @@ This project may utilize:
 ```struct
 - docs/             - Documentation catalog.
 - data/             - Directory for data.
+  ├── reference/    - all needs references.
   ├── raw/          - Raw data.
+  ├── intermediate/ - Intermediate data from all raw data sources.
   └── processed/    - Processed data.
 - figures/          - Figures.
 - src/              - Code sources for testing or trying analize data.
+- report/           - Reports for showing this project.
 ```
 
 ## Data Sources
 
 - [our-world-in-data](https://github.com/owid/energy-data) - Our World in Data — Energy Datasets github repo. (Uses like a submodule)
+- [BP-energy-institute](https://www.energyinst.org/statistical-review) - Statistical Review of World Energy - saved as `.xlsx`
 
 ## Usage
 
 ### Reading analysis
 - [In order to undertake reading analysis online without the necessity of compilation, it is recommended that the catalog file in the repository be utilised.](./Docs/README.md)
+
+### Run pipelines
+
+- Setup project:
+  - Install python with required version.
+  - Install all packages `pip install -r requirements.txt`
+- Run Pipelines:
+  - `python3.12 ./src/xx_pipeline_step/main.py`
 
 ## License
 
