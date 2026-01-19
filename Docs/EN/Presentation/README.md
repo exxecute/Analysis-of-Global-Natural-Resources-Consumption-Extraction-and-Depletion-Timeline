@@ -29,9 +29,9 @@
 |-------------|------------|--------|
 | Preliminary analysis | Python (pandas, numpy) | Descriptive statistics, data verification, handling missing values |
 | Visualization | Python (matplotlib, seaborn) | Histograms, boxplots, violin plots, scatter plots, cat plots |
-| Hypothesis testing | R (stats, t.test, ANOVA, chisq.test) | t-test, ANOVA, χ², region comparison |
+| Hypothesis testing | Python (stats, t.test, ANOVA, chisq.test) | t-test, ANOVA, χ², region comparison |
 | Multivariate analysis | Python (scikit-learn) | PCA, KMeans, clustering, principal component visualization |
-| Depletion forecast | Python / R | Consumption extrapolation, calculation of “Years to depletion” |
+| Depletion forecast | Python  | Consumption extrapolation, calculation of “Years to depletion” |
 
 ---
 
@@ -67,7 +67,7 @@
           v
 +--------------------+
 | Hypothesis Testing |
-| (R)                |
+| (Python)           |
 +--------------------+
           |
           v
@@ -79,7 +79,7 @@
           v
 +--------------------+
 | Depletion Forecast |
-| (Python / R)       |
+| (Python)           |
 +--------------------+
           |
           v
@@ -94,7 +94,6 @@
 - **Interdisciplinarity:** combines energy, ecology, and economics.
 - **Comprehensiveness:** includes EDA, visualization, statistics, PCA, clustering, and forecasting.  
 - **Scientific and practical significance:** identifies threats of resource depletion and analyzes consumption by country.  
-- **Use of Python + R:** demonstrates the ability to combine tools for maximum efficiency.
 
 ---
 

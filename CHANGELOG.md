@@ -6,5 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
-- Move requirements to global config
-- Update Readme
+- Move requirements to global config.
+- Readme.
+
+### Added
+
+- Translate English Documentation.
