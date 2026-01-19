@@ -4,4 +4,6 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-- Nothing up here.
+### Changed
+
+- Move requirements to global config
